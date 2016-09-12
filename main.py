@@ -110,8 +110,9 @@ class MainHandler(webapp2.RequestHandler):
             have_error = True
 
         if have_error == False:
-            self.redirect("/Welcome")
+            self.redirect("/Welcome?username=%s" % username)
 
+#? tells python that username is a variable
 
         response = page_header + form.format(username = username,
                                                 error_username = error_username,
@@ -123,7 +124,8 @@ class MainHandler(webapp2.RequestHandler):
 
 class Welcome(webapp2.RequestHandler):
     def get(self):
-        self.response.write("Welcome!")
+        b= self.request.get("username")
+        self.response.write("Welcome, %s!" % b)
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
